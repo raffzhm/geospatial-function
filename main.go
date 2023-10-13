@@ -33,7 +33,7 @@ func init() {
 }
 
 // GetGeoJSON adalah fungsi yang akan dijalankan oleh Google Cloud Function.
-func GetGeoData(w http.ResponseWriter, r *http.Request) {
+func getGeoData(w http.ResponseWriter, r *http.Request) {
 	// Tambahkan header CORS
 	w.Header().Set("Access-Control-Allow-Origin", "https://raffzhm.github.io") // Ganti dengan domain yang diizinkan.
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
@@ -64,6 +64,6 @@ func GetGeoData(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/getGeoData", GetGeoData)
+	http.HandleFunc("/getGeoData", getGeoData)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
