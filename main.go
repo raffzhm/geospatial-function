@@ -1,4 +1,4 @@
-package geospatialfunc
+package github.com/raffzhm/geospatialfunc
 
 import (
 	"context"
