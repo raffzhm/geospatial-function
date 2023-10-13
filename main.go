@@ -1,4 +1,4 @@
-package geospatial-function
+package geospatialfunc
 
 import (
 	"context"
