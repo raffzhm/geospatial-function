@@ -1,4 +1,4 @@
-package yourpackage
+package geospatial-function
 
 import (
 	"context"
@@ -55,7 +55,7 @@ func GetGeoJSON(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Tambahkan header CORS
-	w.Header().Set("Access-Control-Allow-Origin", "https://example.com") // Ganti dengan domain yang diizinkan.
+	w.Header().Set("Access-Control-Allow-Origin", "raffzhm.github.io") // Ganti dengan domain yang diizinkan.
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
