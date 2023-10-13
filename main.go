@@ -6,8 +6,6 @@ import (
 	"log"
 	"net/http"
 
-	"cloud.google.com/go/functions/framework"
-	"cloud.google.com/go/functions/metadata"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -36,7 +34,11 @@ func init() {
 
 // GetGeoJSON adalah fungsi yang akan dijalankan oleh Google Cloud Function.
 func GetGeoJSON(w http.ResponseWriter, r *http.Request) {
-	metadata, _ := metadata.FromContext(r.Context())
+	// Tambahkan header CORS
+	w.Header().Set("Access-Control-Allow-Origin", "https://raffzhm.github.io") // Ganti dengan domain yang diizinkan.
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
 	collection := client.Database("pointmap").Collection("pointmap")
 
 	// Lakukan query ke MongoDB dan ambil data geospasial
@@ -54,11 +56,6 @@ func GetGeoJSON(w http.ResponseWriter, r *http.Request) {
 		features = append(features, feature)
 	}
 
-	// Tambahkan header CORS
-	w.Header().Set("Access-Control-Allow-Origin", "raffzhm.github.io") // Ganti dengan domain yang diizinkan.
-	w.Header().Set("Access-Control-Allow-Methods", "GET")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-
 	// Kembalikan hasil sebagai JSON
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(features); err != nil {
@@ -67,8 +64,6 @@ func GetGeoJSON(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// Inisialisasi fungsi Google Cloud Functions menggunakan framework.
-	// Anda dapat menentukan konfigurasi seperti timeout dan fungsi lainnya di sini.
-	ctx := context.Background()
-	framework.RegisterHTTPFunctionContext(ctx, "/getGeoData", GetGeoJSON)
+	http.HandleFunc("/getGeoData", GetGeoJSON)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
