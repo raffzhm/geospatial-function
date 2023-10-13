@@ -1,4 +1,4 @@
-module geospatialfunc
+module github.com/raffzhm/geospatialfunc
 
 go 1.16
 
